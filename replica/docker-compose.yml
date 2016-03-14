@@ -1,0 +1,36 @@
+primary:
+  image: mongo:latest 
+  command: mongod --replSet "test-rs0"
+  ports:
+      - "27018:27017"
+  volumes:
+      - /tmp/mongo-data/primary:/data/mongo
+secondary1:
+  image: mongo:latest 
+  command: mongod --replSet "test-rs0"
+  ports:
+      - "27019:27017"
+  volumes:
+      - /tmp/mongo-data/secondary1:/data/mongo
+secondary2:
+  image: mongo:latest 
+  command: mongod --replSet "test-rs0"
+  ports:
+      - "27020:27017"
+  volumes:
+      - /tmp/mongo-data/secondary2:/data/mongo
+secondary3:
+  image: mongo:latest 
+  command: mongod --replSet "test-rs0"
+  ports:
+      - "27021:27017"
+  volumes:
+      - /tmp/mongo-data/secondary3:/data/mongo
+secondary4:
+  image: mongo:latest 
+  command: mongod --replSet "test-rs0"
+  ports:
+      - "27022:27017"
+  volumes:
+      - /tmp/mongo-data/secondary4:/data/mongo
+

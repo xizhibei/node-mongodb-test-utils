@@ -1,0 +1,21 @@
+{
+  "name": "mongo-test",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "read_test.js",
+  "author": "",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "commander": "^2.9.0",
+    "lodash": "^4.6.1",
+    "mongoose": "^4.4.7",
+    "querystring": "^0.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "license": "ISC"
+}

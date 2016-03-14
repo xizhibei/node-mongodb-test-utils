@@ -6,6 +6,8 @@ var _ = require('lodash');
 var Promise = require('bluebird');
 var mongoose = require('mongoose');
 
+require('./connect');
+
 var Schema = mongoose.Schema;
 
 var TestUserSchema = new Schema({

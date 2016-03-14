@@ -1,4 +1,4 @@
-#!/usr/bin/env mongo 192.168.99.100
+#!/usr/bin/env mongo 192.168.99.100:27018
 
 var ip = '192.168.99.100';
 var initPort = 27018;

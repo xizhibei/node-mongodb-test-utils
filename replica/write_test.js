@@ -1,7 +1,10 @@
+#!/usr/bin/env node
+
 'use strict';
 
 var crypto = require('crypto');
 var _ = require('lodash');
+var program = require('commander');
 var Promise = require('bluebird');
 
 var User = require('./test_user_model');
@@ -24,7 +27,12 @@ Promise.map(_.range(total / 1000), function(i) {
     return User.create(data);
 }, {
     concurrency: 1
-}).then(function() {
+})
+.then(function() {
     console.log('done');
     process.exit();
 })
+.catch(function (err) {
+  console.log(err);
+  process.exit(-1);
+});

@@ -33,7 +33,7 @@ mongoose.connection.on('all', function () {
     })
     .catch(function (err) {
         console.log(err);
-        process.exit();
+        process.exit(-1);
     })
 
 });

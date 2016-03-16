@@ -7,7 +7,7 @@ docker-compose.yml up -d
 ./mongo-init-repl-set.js
 
  #Monit mongo: 
-mongostat --discover
+mongostat --discover -h 192.168.99.100:27018
 
  #Write test: 
 ./write_test.js

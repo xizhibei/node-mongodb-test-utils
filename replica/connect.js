@@ -18,7 +18,7 @@ var url = [
   'mongodb://',
   hosts.join(','),
   '/test?',
-  qs.toString({
+  qs.stringify({
     'replicaSet': 'test-rs0',
     'readPreference': 'secondaryPreferred'
   })

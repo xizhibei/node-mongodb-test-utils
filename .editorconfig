@@ -16,6 +16,10 @@ charset = utf-8
 [Makefile]
 indent_style = tab
 
-[{**.js,**.json,**.yml,**.sh}]
+[{**.js,**.json,**.yml}]
 indent_style = space
 indent_size = 2
+
+[{**.sh}]
+indent_style = space
+indent_size = 4

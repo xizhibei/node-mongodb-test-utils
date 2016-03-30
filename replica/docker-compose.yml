@@ -3,6 +3,8 @@ services:
   primary:
     image: mongo:${MONGO_VERSION}
     command: mongod  --noprealloc --smallfiles --replSet ${REPLSET_NAME}
+    ports:
+      - "27017:27017"
   secondary:
     image: mongo:${MONGO_VERSION}
     command: mongod  --noprealloc --smallfiles --replSet ${REPLSET_NAME}

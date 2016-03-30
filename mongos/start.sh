@@ -2,7 +2,7 @@
 
 source ./env.sh
 
-docker-compose -p $PROJECT_NAME up -d
+docker-compose -p $PROJECT_NAME up -d --no-recreate
 docker-compose -p $PROJECT_NAME scale rs1=3 rs2=3 cfg=3
 
 for i in {1..2}

@@ -3,10 +3,8 @@
 
 source ./env.sh
 
-docker-compose -p $PROJECT_NAME down
-
  #Start mongo instances:
-docker-compose -p $PROJECT_NAME up -d
+docker-compose -p $PROJECT_NAME up -d --no-recreate
 
 docker-compose -p $PROJECT_NAME scale secondary=${DOCKER_MONGO_SECONDARY_NUM}
 

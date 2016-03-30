@@ -9,7 +9,7 @@
     "bluebird": "^3.3.4",
     "commander": "^2.9.0",
     "lodash": "^4.6.1",
-    "mongoose": "git+https://github.com/xizhibei/mongoose.git",
+    "mongoose": "^4.4.10",
     "querystring": "^0.2.0"
   },
   "devDependencies": {},

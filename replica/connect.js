@@ -1,45 +1,37 @@
 'use strict';
 
-var _ = require('lodash');
-var Promise = require('bluebird');
-var mongoose = require('mongoose');
-var qs = require('querystring');
+const _ = require('lodash');
+const Promise = require('bluebird');
+const mongoose = require('mongoose');
+const qs = require('querystring');
 mongoose.Promise = Promise;
 
-var ip = '192.168.99.100';
-var initPort = 27018;
-var secondaryNum = 4;
+const HOST = process.env.PRIMARY_HOST || 'localhost';
 
-var hosts = _.times(secondaryNum + 1, function(i) {
-  return ip + ':' + (initPort + i);
-});
-
-var url = [
-  'mongodb://',
-  hosts.join(','),
-  '/test?',
-  qs.stringify({
+const params = qs.stringify({
     'replicaSet': 'test-rs0',
     'readPreference': 'secondaryPreferred'
-  })
-].join('');
+  });
 
-var options = {
+// mongo driver will auto discover the replica set, so primary is enough
+const url = `mongodb://${HOST}/test?${params}`;
+
+const options = {
   replset: {
+    poolSize: 10,
     socketOptions: {
-      connectTimeoutMS: 1000 * 5,
+      connectTimeoutMS: 2000,
       keepAlive: 1
     }
   },
   server: {
     poolSize: 10,
-    slaveOk: true,
-    auto_reconnect: true
+    autoReconnect: true
   }
 };
 
 mongoose.connect(url, options);
-mongoose.connection.on('error', function(err) {
+mongoose.connection.on('error', (err) => {
   console.log(err);
   process.exit(-1);
 });

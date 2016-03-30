@@ -1,33 +1,24 @@
 #!/bin/bash
 
-# mongodb container tag (ie. latest) - you need to change the 'image' field in docker-compose.yml as well
-MONGO_VERSION=latest
-PROJECT_NAME=mongos
-
-docker rm -f mongos
-docker-compose -p $PROJECT_NAME down
+source ./env.sh
 
 docker-compose -p $PROJECT_NAME up -d
 docker-compose -p $PROJECT_NAME scale rs1=3 rs2=3 cfg=3
 
-# (equivalet to)
-# docker run --name rs1_srv1 -P -d mongo mongod --noprealloc --smallfiles --replSet rs1
-
-# get IPs of replica set containers (TODO run in loop. like ^ containers)
 for i in {1..2}
 do
 	for j in {1..3}
 	do
-		export "RS${i}_${j}"=$(docker inspect -f "{{ .NetworkSettings.Networks.${PROJECT_NAME}_default.IPAddress }}" mongos_rs${i}_${j})
+		export "RS${i}_${j}"=$(docker inspect -f "{{ .NetworkSettings.Networks.${PROJECT_NAME}_default.IPAddress }}" ${PROJECT_NAME}_rs${i}_${j})
 	done
 done
 
-echo "Initiating replica set"
+echo "Initiating replica set rs1"
 docker exec -it ${PROJECT_NAME}_rs1_1 \
 	mongo --quiet --eval \
 	"printjson(rs.initiate({_id:'rs1',members:[{_id:0,host:'$RS1_1',priority:10},{_id:1,host:'$RS1_2'},{_id:2,host:'$RS1_3'}]}))"
 
-echo "Initiating replica set"
+echo "Initiating replica set rs2"
 docker exec -it ${PROJECT_NAME}_rs2_1 \
 	mongo --quiet --eval \
 	"printjson(rs.initiate({_id:'rs2',members:[{_id:0,host:'$RS2_1',priority:10},{_id:1,host:'$RS2_2'},{_id:2,host:'$RS2_3'}]}))"
@@ -36,7 +27,7 @@ docker exec -it ${PROJECT_NAME}_rs2_1 \
 # get IPs of config containers
 for j in {1..3}
 do
-	export "CFG_${j}"=$(docker inspect -f "{{ .NetworkSettings.Networks.${PROJECT_NAME}_default.IPAddress }}" mongos_cfg_${j})
+	export "CFG_${j}"=$(docker inspect -f "{{ .NetworkSettings.Networks.${PROJECT_NAME}_default.IPAddress }}" ${PROJECT_NAME}_cfg_${j})
 done
 
 echo "Initiating config server"
